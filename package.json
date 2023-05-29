@@ -1,5 +1,5 @@
 {
-  "name": "arrobefr-jquery-calendar-bs4",
+  "name": "28karonte-jquery-calendar-bs4",
   "version": "1.0.3",
   "description": "A responsive jquery calendar scheduler built with bootstrap 4 and moment.js",
   "main": "dist/js/jquery-calendar.min.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArrobeFr/jquery-calendar-bs4.git"
+    "url": "git+https://github.com/28karonte/jquery-calendar-bs4.git"
   },
   "keywords": [
     "jquery-plugin",
@@ -22,12 +22,12 @@
     "scheduler",
     "responsive"
   ],
-  "author": "Arrobe Fr <contact@arrobe.fr> (https://www.arrobe.fr)",
+  "author": "Ernesto Molina <28karonte@gmail.com>)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ArrobeFr/jquery-calendar-bs4/issues"
+    "url": "https://github.com/28karonte/jquery-calendar-bs4/issues"
   },
-  "homepage": "https://github.com/ArrobeFr/jquery-calendar-bs4#readme",
+  "homepage": "https://github.com/28karonte/jquery-calendar-bs4#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free-webfonts": "^1",
     "bootstrap": "^4",
