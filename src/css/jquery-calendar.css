@@ -1,7 +1,7 @@
 /*!
- * @class Calendar ~jquery-calendar plugin~ (https://github.com/ArrobeFr/jquery-calendar-bs4)
+ * @class Calendar ~jquery-calendar plugin~ (https://github.com/28karonte/jquery-calendar-bs4)
  * @author Developped by Arrobe (https://www.arrobe.fr)
- * @license Licensed under MIT (https://github.com/ArrobeFr/jquery-calendar/blob/master/LICENSE)
+ * @license Licensed under MIT (https://github.com/28karonte/jquery-calendar/blob/master/LICENSE)
  */
 
 .calendar {
@@ -106,8 +106,7 @@ vertical-align:middle
 .calendar-events-day > ul, .calendar-month-day-header > ul {
 -webkit-overflow-scrolling:touch;
 display:block;
-overflow:auto;
-overflow-x:hidden;
+overflow:hidden;
 padding:0;
 position:relative
 }
@@ -118,7 +117,7 @@ color:transparent;
 display:none;
 height:100%;
 opacity:0;
-width:1px
+width:1px;
 }
 
 .calendar .calendar-events .calendar-event {
