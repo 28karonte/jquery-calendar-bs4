@@ -205,7 +205,7 @@ jQuery(document).ready(function($){
     this.hoverEventOrDaynote();
     this.clickEventOrDaynote();
     this.addBtnLeftRight();
-    this.addSwipe();
+    // this.addSwipe();
     this.clickSwitchView();
     this.keyboardSwitchView();
     this.defaultEvents();
@@ -362,7 +362,7 @@ jQuery(document).ready(function($){
     var time = moment(moment()).startOf('Week');
     time.add(this.conf.weekday.timeline.fromHour, 'H');
 
-    var limit = (((this.conf.weekday.timeline.toHour+1)*60) - (this.conf.weekday.timeline.fromHour * 60)) / this.conf.weekday.timeline.intervalMinutes;
+    var limit = (((parseInt(this.conf.weekday.timeline.toHour)+1)*60) - (parseInt(this.conf.weekday.timeline.fromHour) * 60)) / this.conf.weekday.timeline.intervalMinutes;
     var i = 0;
     while (i < limit){
       li = $('<li>');
@@ -386,11 +386,12 @@ jQuery(document).ready(function($){
       .css('text-align', 'center')
       .css('padding-top', (this.conf.weekday.dayline.month.heightPx-20)/2+'px')
     ;
-    if (this.getView() == 'week'){
+    if (this.getView() === 'week'){
       div.text(this.miscUcfirstString(moment.unix(this.conf.unixTimestamp).format(this.conf.weekday.dayline.month.format)));
-      div.addClass('weektomonth');
+      //activarlo con config en un futuro vista a los dias del mes
+      // div.addClass('weektomonth');
     }
-    if (this.getView() == 'day'){
+    if (this.getView() === 'day'){
       div.text(this.miscUcfirstString(moment.unix(this.conf.unixTimestamp).format(this.conf.weekday.dayline.month.weekFormat)));
       div.addClass('daytoweek');
     }
@@ -413,26 +414,27 @@ jQuery(document).ready(function($){
         class: 'calendar-day-header'
       });
       div.height(this.conf.weekday.dayline.heightPx);
-      if (i == 0 && this.mobileQuery() == 'desktop'){
-        div.append($('<button>', {
-          class: 'btn btn-sm btn-light btn-move-calendar'
-        }).attr('data-direction', 'left').append($('<i>', {
-          class: 'las la-angle-left'
-        })));
-      }
+      //boton al siguente dia
+      // if (i === 0 && this.mobileQuery() === 'desktop'){
+      //   div.append($('<button>', {
+      //     class: 'btn btn-sm btn-light btn-move-calendar'
+      //   }).attr('data-direction', 'left').append($('<i>', {
+      //     class: 'las la-angle-left'
+      //   })));
+      // }
       div.append($('<span>')
         .addClass('weektoday')
         .css('width', '100%')
         .html(this.miscUcfirstString(time.format(this.conf.weekday.dayline.format)))
       );
-
-      if (i == days.length - 1 && this.mobileQuery() == 'desktop'){
-        div.append($('<button>', {
-          class: 'btn btn-sm btn-light btn-move-calendar'
-        }).attr('data-direction', 'right').append($('<i>', {
-          class: 'las la-angle-right'
-        })));
-      }
+      //boton al dia anterior
+      // if (i === days.length - 1 && this.mobileQuery() === 'desktop'){
+      //   div.append($('<button>', {
+      //     class: 'btn btn-sm btn-light btn-move-calendar'
+      //   }).attr('data-direction', 'right').append($('<i>', {
+      //     class: 'las la-angle-right'
+      //   })));
+      // }
       li.append(div);
       li.attr('data-time', time.startOf('day').format('X'));
       li.append($('<ul>'));
@@ -449,7 +451,7 @@ jQuery(document).ready(function($){
     $(this.element).find('.calendar-day-header').each(function(){
       $(this).height(maxHeight);
     });
-
+    console.log(this.conf.weekday);
     if (this.conf.weekday.dayline.heightPx < maxHeight) {
       this.conf.weekday.dayline.heightPx = maxHeight;
       $(this.element).find('div.calendar-timeline').css('padding-top', this.conf.weekday.dayline.heightPx + 'px');    // W: Padding-top do cabeçalho dos dias da semana
@@ -458,154 +460,154 @@ jQuery(document).ready(function($){
 
   };
 
-  Calendar.prototype.monthDrawWeek = function() {
-    $(this.element).append($('<div>', {
-      class: 'calendar-events'
-    }));
-    var div = $('<div>', {
-      class: 'calendar-month'
-    });
-    div.css('height', this.conf.month.heightPx+'px');
+  // Calendar.prototype.monthDrawWeek = function() {
+  //   $(this.element).append($('<div>', {
+  //     class: 'calendar-events'
+  //   }));
+  //   var div = $('<div>', {
+  //     class: 'calendar-month'
+  //   });
+  //   div.css('height', this.conf.month.heightPx+'px');
+  //
+  //   if (this.mobileQuery() === 'desktop'){
+  //     div.append($('<button>', {
+  //       class: 'btn btn-sm btn-light btn-move-calendar'
+  //     })
+  //       .attr('data-direction', 'left')
+  //       .append($('<i>', {
+  //         class: 'las la-angle-left'
+  //       }))
+  //     );
+  //   }
+  //   div.append($('<span>')
+  //     .css('position', 'absolute')
+  //     .css('top', this.conf.month.heightPx/2+'px')
+  //     .css('right', '50%')
+  //     .css('transform', 'translate(50%,-50%)')
+  //     .text(this.miscUcfirstString(moment.unix(this.conf.unixTimestamp).format(this.conf.month.format)))
+  //   );
+  //   if (this.mobileQuery() === 'desktop'){
+  //     div.append($('<button>', {
+  //       class: 'btn btn-sm btn-light btn-move-calendar'
+  //     })
+  //       .css('float', 'right')
+  //       .attr('data-direction', 'right')
+  //       .append($('<i>', {
+  //         class: 'las la-angle-right'
+  //       }))
+  //     );
+  //   }
+  //
+  //   $(this.element).find('div.calendar-events').append(div);
+  //   $(this.element).find('div.calendar-events').append($('<ul>'));
+  //
+  //   var li, ul = $(this.element).find('div.calendar-events').find('ul');
+  //
+  //   var time = moment.unix(this.conf.unixTimestamp).startOf('month');
+  //   var month = parseInt(time.format('MM'));
+  //   var week = parseInt(time.format('w'));
+  //   var nbWeeks=0;
+  //   while (parseInt(time.format('MM')) === month){
+  //     nbWeeks++;
+  //     while (parseInt(time.format('w')) === week){
+  //       time.add(1, 'days');
+  //     }
+  //     week = parseInt(time.format('w'));
+  //   }
+  //
+  //   for (var i=0; i<this.conf.month.dayheader.weekdays.length; i++){
+  //     time = moment().startOf('week').add(this.conf.month.dayheader.weekdays[i], 'days');
+  //     li = $('<li>', {
+  //       class: 'calendar-month-day-header'
+  //     });
+  //     li.append($('<div>')
+  //       .css('height', this.conf.month.dayheader.heightPx+'px')
+  //       .css('padding-top', (this.conf.month.dayheader.heightPx-20)/2+'px')
+  //       .text(this.miscUcfirstString(time.format(this.conf.month.dayheader.format)))
+  //     );
+  //     li.css('width', 100/this.conf.month.dayheader.weekdays.length+'%');
+  //     li.append($('<ul>').css('height', nbWeeks*this.conf.month.weekline.heightPx+'px'));
+  //     ul.append(li);
+  //   }
+  //   var maxHeight = 0;
+  //   $(this.element).find('.calendar-month-day-header').each(function(){
+  //     var e = $(this).find('div');
+  //     if ($(e).height() > maxHeight){
+  //       maxHeight = $(e).height();
+  //     }
+  //   });
+  //   $(this.element).find('.calendar-month-day-header').each(function(){
+  //     var e = $(this).find('div');
+  //     $(e).height(maxHeight);
+  //   });
+  // };
 
-    if (this.mobileQuery() == 'desktop'){
-      div.append($('<button>', {
-        class: 'btn btn-sm btn-light btn-move-calendar'
-      })
-        .attr('data-direction', 'left')
-        .append($('<i>', {
-          class: 'las la-angle-left'
-        }))
-      );
-    }
-    div.append($('<span>')
-      .css('position', 'absolute')
-      .css('top', this.conf.month.heightPx/2+'px')
-      .css('right', '50%')
-      .css('transform', 'translate(50%,-50%)')
-      .text(this.miscUcfirstString(moment.unix(this.conf.unixTimestamp).format(this.conf.month.format)))
-    );
-    if (this.mobileQuery() == 'desktop'){
-      div.append($('<button>', {
-        class: 'btn btn-sm btn-light btn-move-calendar'
-      })
-        .css('float', 'right')
-        .attr('data-direction', 'right')
-        .append($('<i>', {
-          class: 'las la-angle-right'
-        }))
-      );
-    }
+  // Calendar.prototype.monthDrawWeekNumbers = function() {
+  //   $(this.element).append($('<div>', {
+  //     class: 'calendar-timeline'
+  //   }));
+  //   var marginTop = this.conf.month.dayheader.heightPx;
+  //   marginTop += this.conf.month.heightPx;
+  //   if (this.conf.categories.enable){
+  //     marginTop += 30;
+  //   }
+  //   marginTop += 2;
+  //   $(this.element).find('div.calendar-timeline').css('margin-top', marginTop+'px');
+  //   $(this.element).find('div.calendar-timeline').append($('<ul>'));
+  //
+  //   var li, ul = $(this.element).find('div.calendar-timeline').find('ul');
+  //
+  //   var time = moment.unix(this.conf.unixTimestamp).startOf('month');
+  //   var month = parseInt(time.format('MM'));
+  //   var week = parseInt(time.format('w'));
+  //   while (parseInt(time.format('MM')) === month){
+  //     li = $('<li>', {
+  //       class: 'monthtoweek'
+  //     });
+  //     li.append($('<span>')
+  //       .attr('data-timestamp', time.format('X'))
+  //       .text(time.format(this.conf.month.weekline.format)).css('margin-top', this.conf.month.weekline.heightPx/2+'px')
+  //     );
+  //     li.height(this.conf.month.weekline.heightPx);
+  //     ul.append(li);
+  //     while (parseInt(time.format('w')) === week){
+  //       time.add(1, 'days');
+  //     }
+  //     week = parseInt(time.format('w'));
+  //   }
+  // };
 
-    $(this.element).find('div.calendar-events').append(div);
-    $(this.element).find('div.calendar-events').append($('<ul>'));
-
-    var li, ul = $(this.element).find('div.calendar-events').find('ul');
-
-    var time = moment.unix(this.conf.unixTimestamp).startOf('month');
-    var month = parseInt(time.format('MM'));
-    var week = parseInt(time.format('w'));
-    var nbWeeks=0;
-    while (parseInt(time.format('MM')) == month){
-      nbWeeks++;
-      while (parseInt(time.format('w')) == week){
-        time.add(1, 'days');
-      }
-      week = parseInt(time.format('w'));
-    }
-
-    for (var i=0; i<this.conf.month.dayheader.weekdays.length; i++){
-      time = moment().startOf('week').add(this.conf.month.dayheader.weekdays[i], 'days');
-      li = $('<li>', {
-        class: 'calendar-month-day-header'
-      });
-      li.append($('<div>')
-        .css('height', this.conf.month.dayheader.heightPx+'px')
-        .css('padding-top', (this.conf.month.dayheader.heightPx-20)/2+'px')
-        .text(this.miscUcfirstString(time.format(this.conf.month.dayheader.format)))
-      );
-      li.css('width', 100/this.conf.month.dayheader.weekdays.length+'%');
-      li.append($('<ul>').css('height', nbWeeks*this.conf.month.weekline.heightPx+'px'));
-      ul.append(li);
-    }
-    var maxHeight = 0;
-    $(this.element).find('.calendar-month-day-header').each(function(){
-      var e = $(this).find('div');
-      if ($(e).height() > maxHeight){
-        maxHeight = $(e).height();
-      }
-    });
-    $(this.element).find('.calendar-month-day-header').each(function(){
-      var e = $(this).find('div');
-      $(e).height(maxHeight);
-    });
-  };
-
-  Calendar.prototype.monthDrawWeekNumbers = function() {
-    $(this.element).append($('<div>', {
-      class: 'calendar-timeline'
-    }));
-    var marginTop = this.conf.month.dayheader.heightPx;
-    marginTop += this.conf.month.heightPx;
-    if (this.conf.categories.enable){
-      marginTop += 30;
-    }
-    marginTop += 2;
-    $(this.element).find('div.calendar-timeline').css('margin-top', marginTop+'px');
-    $(this.element).find('div.calendar-timeline').append($('<ul>'));
-
-    var li, ul = $(this.element).find('div.calendar-timeline').find('ul');
-
-    var time = moment.unix(this.conf.unixTimestamp).startOf('month');
-    var month = parseInt(time.format('MM'));
-    var week = parseInt(time.format('w'));
-    while (parseInt(time.format('MM')) == month){
-      li = $('<li>', {
-        class: 'monthtoweek'
-      });
-      li.append($('<span>')
-        .attr('data-timestamp', time.format('X'))
-        .text(time.format(this.conf.month.weekline.format)).css('margin-top', this.conf.month.weekline.heightPx/2+'px')
-      );
-      li.height(this.conf.month.weekline.heightPx);
-      ul.append(li);
-      while (parseInt(time.format('w')) == week){
-        time.add(1, 'days');
-      }
-      week = parseInt(time.format('w'));
-    }
-  };
-
-  Calendar.prototype.monthDrawWeekDays = function() {
-    var days = this.getViewDays(), targetUl, li;
-
-    var i = parseInt(moment.unix(days[0]).weekday());
-    var time = moment.unix(days[0]);
-    while (i>0){
-      time = time.subtract(1, 'days');
-      targetUl = this.element.find(".calendar-events>ul>.calendar-month-day-header>div:contains('"+this.miscUcfirstString(time.format(this.conf.month.dayheader.format))+"')").parent().find('ul');
-      li = $('<li>');
-      li.css('height', this.conf.month.weekline.heightPx+'px');
-      $(targetUl).append(li);
-      i--;
-    }
-
-    time = days.length;
-    for (i=0; i<time; i++){
-      targetUl = this.element.find(".calendar-events>ul>.calendar-month-day-header>div:contains('"+this.miscUcfirstString(moment.unix(days[i]).format(this.conf.month.dayheader.format))+"')").parent().find('ul');
-      li = $('<li>', {
-        class: 'calendar-month-events-day'
-      });
-      li.css('height', this.conf.month.weekline.heightPx+'px');
-      li.attr('data-time-from', moment.unix(days[i]).startOf('day').format('X'));
-      li.attr('data-time-to', moment.unix(days[i]).endOf('day').format('X'));
-      li.append($('<span>').text(moment.unix(days[i]).format(this.conf.month.day.format)));
-      $(targetUl).append(li);
-    }
-
-    this.element.find('.calendar-month-events-day').each(function() {
-      $(this).append($('<ul>'));
-    });
-  };
+  // Calendar.prototype.monthDrawWeekDays = function() {
+  //   var days = this.getViewDays(), targetUl, li;
+  //
+  //   var i = parseInt(moment.unix(days[0]).weekday());
+  //   var time = moment.unix(days[0]);
+  //   while (i>0){
+  //     time = time.subtract(1, 'days');
+  //     targetUl = this.element.find(".calendar-events>ul>.calendar-month-day-header>div:contains('"+this.miscUcfirstString(time.format(this.conf.month.dayheader.format))+"')").parent().find('ul');
+  //     li = $('<li>');
+  //     li.css('height', this.conf.month.weekline.heightPx+'px');
+  //     $(targetUl).append(li);
+  //     i--;
+  //   }
+  //
+  //   time = days.length;
+  //   for (i=0; i<time; i++){
+  //     targetUl = this.element.find(".calendar-events>ul>.calendar-month-day-header>div:contains('"+this.miscUcfirstString(moment.unix(days[i]).format(this.conf.month.dayheader.format))+"')").parent().find('ul');
+  //     li = $('<li>', {
+  //       class: 'calendar-month-events-day'
+  //     });
+  //     li.css('height', this.conf.month.weekline.heightPx+'px');
+  //     li.attr('data-time-from', moment.unix(days[i]).startOf('day').format('X'));
+  //     li.attr('data-time-to', moment.unix(days[i]).endOf('day').format('X'));
+  //     li.append($('<span>').text(moment.unix(days[i]).format(this.conf.month.day.format)));
+  //     $(targetUl).append(li);
+  //   }
+  //
+  //   this.element.find('.calendar-month-events-day').each(function() {
+  //     $(this).append($('<ul>'));
+  //   });
+  // };
 
   Calendar.prototype.drawCategories = function() {
     this.determineEventsCategories();
@@ -863,8 +865,50 @@ jQuery(document).ready(function($){
           day = d;
         }
       });
+
       if (day === false){
-        //console.warn('Event '+i+' out of current view');
+
+        if (e.start > e.end) {
+          console.warn('incorrect time day events ends before start');
+          return;
+        }
+        let diffenceDays = moment.unix(e.end).format('DD') - moment.unix(e.start).format('DD');
+        console.log(diffenceDays+' difference days');
+        for (let f=0;  f<=diffenceDays;f++ ){
+
+          let clonedEventModed = JSON.parse(JSON.stringify(e));
+          if (f === 0){clonedEventModed.end = moment.unix(clonedEventModed.start).endOf("day").format("X")}
+          console.log(moment.unix(clonedEventModed.end).format('DD MM YYYY HH:mm:ss')+ "  --cloned end event time before manipulation iff statement");
+          if (f!==0 && f!==diffenceDays) {
+            clonedEventModed.start = moment.unix(clonedEventModed.start).startOf("day").format("X");
+            clonedEventModed.end = moment.unix(clonedEventModed.end).endOf("day").format("X");
+          }
+          if (f === diffenceDays){
+            clonedEventModed.start = moment.unix(clonedEventModed.end).startOf("day").format("X");
+          }
+          $(this.element).find('.calendar-events-day').each(function(i, d){
+            if (clonedEventModed.start >= (parseInt($(d).attr('data-time'))+fromHour*60*60) && clonedEventModed.end <= (parseInt($(d).attr('data-time'))+toHour*60*60)+((60/interval)*interval*60)){
+              day = d;
+            }
+          });
+          console.log(moment.unix(clonedEventModed.start).format('DD MM YYYY HH:mm:ss')+ "  --cloned start event time");
+          console.log(moment.unix(clonedEventModed.end).format('DD MM YYYY HH:mm:ss')+ "  --cloned end event time");
+          this.drawEventsOrDaynotes(
+              day,
+              i,
+              moment.unix(clonedEventModed.start).format('X'),
+              moment.unix(clonedEventModed.end).format('X'),
+              clonedEventModed.title,
+              clonedEventModed.content,
+              clonedEventModed.category,
+              this.getEventCategoryColor(clonedEventModed.category),
+              moment.unix(clonedEventModed.start).format(this.conf.weekday.timeline.format)+' - '+moment.unix(clonedEventModed.end).format(this.conf.weekday.timeline.format),
+              ['calendar-event']
+          );
+
+        }
+
+        console.warn('Event '+i+' out of current view');
       }else{
         this.drawEventsOrDaynotes(
           day,
@@ -1008,7 +1052,7 @@ jQuery(document).ready(function($){
   };
 
   Calendar.prototype.drawModal = function() {
-    modal = '<div class="modal fade" id="calendar-modal" tabindex="-1" role="dialog">';
+    let modal = '<div class="modal fade" id="calendar-modal" tabindex="-1" role="dialog">';
     modal+= '<div class="modal-dialog" role="document">';
     modal+= '<div class="modal-content">';
     modal+= '<div class="modal-header">';
@@ -1137,19 +1181,20 @@ jQuery(document).ready(function($){
   };
 
   Calendar.prototype.getViewDays = function() {
+    let i;
     var days = [];
-    if (this.getView() == 'day'){
+    if (this.getView() === 'day'){
       days.push(parseInt(moment.unix(this.conf.unixTimestamp).format('X')));
     }
-    if (this.getView() == 'week'){
-      for (var i=0; i<this.conf.weekday.dayline.weekdays.length; i++){
+    if (this.getView() === 'week'){
+      for (i = 0; i<this.conf.weekday.dayline.weekdays.length; i++){
         days.push(parseInt(moment.unix(this.conf.unixTimestamp).startOf('week').add(this.conf.weekday.dayline.weekdays[i], 'days').format('X')));
       }
     }
-    if (this.getView() == 'month'){
+    if (this.getView() === 'month'){
       var nbDaysInMonth = moment.unix(this.conf.unixTimestamp).daysInMonth();
       var time = moment.unix(this.conf.unixTimestamp).startOf('month');
-      for (var i=0; i<nbDaysInMonth; i++){
+      for (i = 0; i<nbDaysInMonth; i++){
         days.push(parseInt(time.startOf('day').format('X')));
         time.add(1, 'days');
       }
@@ -1168,24 +1213,24 @@ jQuery(document).ready(function($){
     });
   };
 
-  Calendar.prototype.addSwipe = function() {
-    var self = this;
-    self.element.find('.calendar-events').swipe({
-      swipe:function(event, direction) {
-        if (direction == 'left' || direction == 'right'){
-          // Le swipe est à l'envers
-          if (direction == 'left'){
-            direction = 'right';
-          }else if (direction == 'right'){
-            direction = 'left';
-          }
-          self.moveCurrentIntervalView(direction);
-        }
-      },
-      threshold: 100,
-      allowPageScroll: 'auto'
-    });
-  };
+  // Calendar.prototype.addSwipe = function() {
+  //   var self = this;
+  //   self.element.find('.calendar-events').swipe({
+  //     swipe:function(event, direction) {
+  //       if (direction === 'left' || direction === 'right'){
+  //         // Le swipe est à l'envers
+  //         if (direction === 'left'){
+  //           direction = 'right';
+  //         }else if (direction === 'right'){
+  //           direction = 'left';
+  //         }
+  //         self.moveCurrentIntervalView(direction);
+  //       }
+  //     },
+  //     threshold: 100,
+  //     allowPageScroll: 'auto'
+  //   });
+  // };
 
   Calendar.prototype.clickSwitchView = function() {
     var self = this;
@@ -1220,31 +1265,31 @@ jQuery(document).ready(function($){
     var self = this;
     $(window).unbind('keydown').on('keydown', function(x){
       // Ctrl + left
-      if (x.keyCode == 37 && x.ctrlKey){
+      if (x.keyCode === 37 && x.ctrlKey){
         self.moveCurrentIntervalView('left');
       }
       // Ctrl + right
-      if (x.keyCode == 39 && x.ctrlKey){
+      if (x.keyCode === 39 && x.ctrlKey){
         self.moveCurrentIntervalView('right');
       }
       // Ctrl + up
-      if (x.keyCode == 38 && x.ctrlKey){
-        if (self.getView() == 'week'){
+      if (x.keyCode === 38 && x.ctrlKey){
+        if (self.getView() === 'week'){
           self.setView('month');
           self.init();
         }
-        if (self.getView() == 'day'){
+        if (self.getView() === 'day'){
           self.setView('week');
           self.init();
         }
       }
       // Ctrl + down
-      if (x.keyCode == 40 && x.ctrlKey){
-        if (self.getView() == 'week'){
+      if (x.keyCode === 40 && x.ctrlKey){
+        if (self.getView() === 'week'){
           self.setView('day');
           self.init();
         }
-        if (self.getView() == 'month'){
+        if (self.getView() === 'month'){
           self.setView('week');
           self.init();
         }
@@ -1254,19 +1299,19 @@ jQuery(document).ready(function($){
 
   Calendar.prototype.moveCurrentIntervalView = function(direction) {
     var word, self = this;
-    if (this.getView() == 'day'){
+    if (this.getView() === 'day'){
       word = 'days';
     }
-    if (this.getView() == 'week'){
+    if (this.getView() === 'week'){
       word = 'week';
     }
-    if (this.getView() == 'month'){
+    if (this.getView() === 'month'){
       word = 'month';
     }
-    if (direction == 'left'){
+    if (direction === 'left'){
       this.conf.unixTimestamp = parseInt(moment.unix(self.conf.unixTimestamp).subtract(1, word).format('X'));
     }
-    if (direction == 'right'){
+    if (direction === 'right'){
       this.conf.unixTimestamp = parseInt(moment.unix(self.conf.unixTimestamp).add(1, word).format('X'));
     }
     this.init();
@@ -1309,7 +1354,7 @@ jQuery(document).ready(function($){
   Calendar.prototype.getCategoryColor = function(category, object, colors, color) {
     var used, j, i = object.length;
     while(i--) {
-      if (object[i].category == category){
+      if (object[i].category === category){
         return object[i].color;
       }
     }
@@ -1318,7 +1363,7 @@ jQuery(document).ready(function($){
       used = false;
       j = object.length;
       while(j--) {
-        if (object[j].color == colors[i]){
+        if (object[j].color === colors[i]){
           used = true;
         }
       }
@@ -1388,7 +1433,7 @@ jQuery(document).ready(function($){
   };
 
   Calendar.prototype.setEventColors = function(array) {
-    this.conf.colors.events = this.miscDedupeArray(array);
+    this.conf.colors.events = this.miscUniqueArray(array);
     if (this.conf.colors.random){
       this.conf.colors.events.sort(function() {return 0.5 - Math.random();});
     }
@@ -1399,7 +1444,7 @@ jQuery(document).ready(function($){
   };
 
   Calendar.prototype.setDaynoteColors = function(array) {
-    this.conf.colors.daynotes = this.miscDedupeArray(array);
+    this.conf.colors.daynotes = this.miscUniqueArray(array);
     if (this.conf.colors.random){
       this.conf.colors.daynotes.sort(function() {return 0.5 - Math.random();});
     }
@@ -1478,24 +1523,13 @@ jQuery(document).ready(function($){
     }
   };
 
-  Calendar.prototype.miscDedupeArray = function(a) {
-    a = a.concat();
-    for (var i=0; i<a.length; ++i) {
-      for (var j=i+1; j<a.length; ++j) {
-        if(a[i] === a[j]){
-          a.splice(j--, 1);
-        }
-      }
-    }
-    return a;
-  };
-
   Calendar.prototype.miscUniqueArray = function(a) {
     a = a.concat();
     for(var i=0; i<a.length; ++i) {
       for(var j=i+1; j<a.length; ++j) {
-        if(a[i] === a[j])
+        if(a[i] === a[j]) {
           a.splice(j--, 1);
+        }
       }
     }
     return a;
@@ -1535,7 +1569,7 @@ jQuery(document).ready(function($){
     clearTimeout(resizeListener2);
     resizeListener2 = setTimeout(function(){
       objSchedulesPlan.forEach(function(obj){
-        if (obj.mobileQuery() == 'desktop'){
+        if (obj.mobileQuery() === 'desktop'){
           obj.init();
         }
       });
