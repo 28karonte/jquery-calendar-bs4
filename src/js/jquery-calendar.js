@@ -425,7 +425,8 @@ jQuery(document).ready(function ($) {
             div.append($('<span>')
                 .addClass('weektoday')
                 .css('width', '100%')
-                .html(this.miscUcfirstString(time.format(this.conf.weekday.dayline.format)))
+                // .html(this.miscUcfirstString(time.format(this.conf.weekday.dayline.format)))
+                .html(this.miscUcfirstString(time.format('dddd')))
             );
             //boton al dia anterior
             // if (i === days.length - 1 && this.mobileQuery() === 'desktop'){
@@ -875,7 +876,7 @@ jQuery(document).ready(function ($) {
                 // }
                 var differenceDays = moment.unix(e.end).diff(moment.unix(e.start),'days')+1;
                 console.log(differenceDays);
-                for (var f = 0; f <= differenceDays; f++) {
+                for (var f = 0; f < differenceDays; f++) {
                     let clonedEventModed = JSON.parse(JSON.stringify(e));
                     if (f === 0) {
                         clonedEventModed.end = moment.unix(clonedEventModed.start).endOf("day").format("X")
