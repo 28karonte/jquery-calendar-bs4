@@ -262,7 +262,19 @@
           console.error(err);
         });
       });
-
+      $('#deleteEvents').click(function(){
+        var form = $('#form-update');
+        eventsDB.remove(form.find('._id').val(), form.find('._rev').val()).then(function(response){
+          var events = Calendar.getEvents();
+          for (var i=0; i<events.length; i++){
+              events[i].delete();
+          }
+          Calendar.init();
+          $('#modal-update').modal('hide');
+        }).catch(function(err){
+          console.error(err);
+        });
+      });
       /**
        * DELETE
        */

@@ -869,23 +869,30 @@ jQuery(document).ready(function ($) {
 
             if (day === false) {
 
-                if (e.start > e.end) {
-                    console.warn('incorrect time day events ends before start');
-                    return;
-                }
-                var differenceDays = moment.unix(e.end).format('DD') - moment.unix(e.start).format('DD');
+                // if (e.start > e.end) {
+                //     console.warn('incorrect time day events ends before start');
+                //     return;
+                // }
+                var differenceDays = moment.unix(e.end).diff(moment.unix(e.start),'days')+1;
+                console.log(differenceDays);
                 for (var f = 0; f <= differenceDays; f++) {
-                    var clonedEventModed = JSON.parse(JSON.stringify(e));
+                    let clonedEventModed = JSON.parse(JSON.stringify(e));
                     if (f === 0) {
                         clonedEventModed.end = moment.unix(clonedEventModed.start).endOf("day").format("X")
                     }
                     if (f !== 0 && f !== differenceDays) {
-                        clonedEventModed.start = moment.unix(clonedEventModed.start).startOf("day").format("X");
-                        clonedEventModed.end = moment.unix(clonedEventModed.end).endOf("day").format("X");
+                        // add f day
+                        clonedEventModed.start = moment.unix(clonedEventModed.start).add(f,'days').startOf("day").format("X");
+                        clonedEventModed.end = moment.unix(clonedEventModed.start).endOf("day").format("X");
                     }
                     if (f === differenceDays) {
+                        // clonedEventModed.start = moment.unix(clonedEventModed.end).add(f,'days').startOf("day").format("X");
                         clonedEventModed.start = moment.unix(clonedEventModed.end).startOf("day").format("X");
+                        // clonedEventModed.end = moment.unix(clonedEventModed.end).add(f,'days').format("X");
+                        // clonedEventModed.end = moment.unix(clonedEventModed.end).add(f,'days').format("X");
                     }
+                    console.log(moment.unix(clonedEventModed.start).format('DD MM YYYY HH:mm:ss'));
+                    console.log(moment.unix(clonedEventModed.end).format('DD MM YYYY HH:mm:ss'));
                     $(this.element).find('.calendar-events-day').each(function (i, d) {
                         if (clonedEventModed.start >= (parseInt($(d).attr('data-time')) + fromHour * 60 * 60) && clonedEventModed.end <= (parseInt($(d).attr('data-time')) + toHour * 60 * 60) + ((60 / interval) * interval * 60)) {
                             day = d;
